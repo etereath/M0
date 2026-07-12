@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/sync_event.schema.json",
+  "title": "Sync Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "direction",
+    "entity_type",
+    "entity_id",
+    "operation",
+    "payload_hash",
+    "status",
+    "attempt_count",
+    "created_at"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^SYNC_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "CLOUD_TO_LOCAL",
+        "LOCAL_TO_CLOUD"
+      ]
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "EMPLOYEE",
+        "TASK",
+        "ASSIGNMENT",
+        "TASK_UPDATE",
+        "PROJECT",
+        "PROJECT_UPDATE",
+        "ITEM",
+        "LOT",
+        "INVENTORY_TRANSACTION",
+        "AGENT_PROPOSAL",
+        "APPROVAL"
+      ]
+    },
+    "entity_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "CREATE",
+        "UPDATE",
+        "APPEND",
+        "SOFT_DELETE",
+        "RECONCILE"
+      ]
+    },
+    "source_event_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 200
+    },
+    "payload_hash": {
+      "$ref": "common.schema.json#/$defs/content_hash"
+    },
+    "local_version": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "cloud_version": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "SUCCEEDED",
+        "FAILED_RETRYABLE",
+        "FAILED_PERMANENT",
+        "CONFLICT"
+      ]
+    },
+    "attempt_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "error_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 80
+    },
+    "error_message": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 2000
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "processed_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

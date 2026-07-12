@@ -1,0 +1,491 @@
+openapi: 3.1.0
+info:
+  title: Farm Automation Data Gateway API
+  version: 0.1.0
+  description: M0 v0.1 public contract for interoperable automation-platform implementations.
+security:
+- BearerAuth: []
+tags:
+- name: Messages
+- name: Tasks
+- name: Projects
+- name: Inventory
+- name: Approvals
+- name: Sync
+- name: Reports
+paths:
+  /v1/messages:
+    post:
+      tags:
+      - Messages
+      summary: Ingest one external conversation message
+      operationId: ingestConversationMessage
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - platform
+              - conversation_id
+              - message_id
+              - sender_platform_id
+              - message
+              - received_at
+              properties:
+                platform:
+                  type: string
+                conversation_id:
+                  type: string
+                message_id:
+                  type: string
+                sender_platform_id:
+                  type: string
+                message:
+                  type: string
+                attachments:
+                  type: array
+                  items:
+                    $ref: ../schemas/common/common.schema.json#/$defs/attachment_ref
+                received_at:
+                  $ref: ../schemas/common/common.schema.json#/$defs/timestamp
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - action
+                properties:
+                  action:
+                    type: string
+                  target_id:
+                    type:
+                    - string
+                    - 'null'
+                  reply_text:
+                    type:
+                    - string
+                    - 'null'
+        '400':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/tasks:
+    post:
+      tags:
+      - Tasks
+      summary: Execute CREATE_TASK command
+      operationId: createTask
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/ActorId'
+      - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/tasks/task_command.schema.json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/tasks/task.schema.json
+        '400':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+    get:
+      tags:
+      - Tasks
+      summary: List tasks
+      operationId: listTasks
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: assignee_employee_id
+        in: query
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 200
+          default: 50
+      responses:
+        '200':
+          description: Task list
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - items
+                - page
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: ../schemas/tasks/task.schema.json
+                  page:
+                    $ref: ../schemas/common/common.schema.json#/$defs/page_info
+  /v1/tasks/{task_id}:
+    get:
+      tags:
+      - Tasks
+      summary: Get task
+      operationId: getTask
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: Task
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/tasks/task.schema.json
+        '404':
+          $ref: '#/components/responses/Error'
+  /v1/tasks/{task_id}/commands:
+    post:
+      tags:
+      - Tasks
+      summary: Execute a task command
+      operationId: executeTaskCommand
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/ActorId'
+      - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/tasks/task_command.schema.json
+      responses:
+        '200':
+          description: Updated task
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/tasks/task.schema.json
+        '400':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/tasks/{task_id}/updates:
+    post:
+      tags:
+      - Tasks
+      summary: Append a task update event
+      operationId: appendTaskUpdate
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/tasks/task_update.schema.json
+      responses:
+        '201':
+          description: Update appended
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/tasks/task_update.schema.json
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/projects:
+    post:
+      tags:
+      - Projects
+      summary: Create a project
+      operationId: createProject
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/ActorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/projects/project.schema.json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/projects/project.schema.json
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/projects/{project_id}/updates:
+    post:
+      tags:
+      - Projects
+      summary: Append project update
+      operationId: appendProjectUpdate
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/projects/project_update.schema.json
+      responses:
+        '201':
+          description: Appended
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/projects/project_update.schema.json
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/inventory/transactions:
+    post:
+      tags:
+      - Inventory
+      summary: Append an inventory transaction
+      operationId: appendInventoryTransaction
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/ActorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/inventory/inventory_transaction.schema.json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/inventory/inventory_transaction.schema.json
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/agent-proposals:
+    post:
+      tags:
+      - Approvals
+      summary: Record agent proposal
+      operationId: createAgentProposal
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/approvals/agent_proposal.schema.json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/approvals/agent_proposal.schema.json
+  /v1/approval-requests:
+    post:
+      tags:
+      - Approvals
+      summary: Create approval request
+      operationId: createApprovalRequest
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schemas/approvals/approval.schema.json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/approvals/approval.schema.json
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/approval-requests/{approval_request_id}/resolve:
+    post:
+      tags:
+      - Approvals
+      summary: Resolve approval
+      operationId: resolveApproval
+      parameters:
+      - name: approval_request_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/ActorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - decision
+              properties:
+                decision:
+                  type: string
+                  enum:
+                  - APPROVE
+                  - REJECT
+                note:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: Resolved
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/approvals/approval.schema.json
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/sync/external/pull:
+    post:
+      tags:
+      - Sync
+      summary: Pull incremental changes from an external platform
+      operationId: pullExternal
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '202':
+          description: Started
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/sync/external/push:
+    post:
+      tags:
+      - Sync
+      summary: Push local outbox to an external platform
+      operationId: pushExternal
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '202':
+          description: Started
+        '409':
+          $ref: '#/components/responses/Error'
+  /v1/reports/daily-tasks:
+    get:
+      tags:
+      - Reports
+      summary: Daily task summary
+      operationId: getDailyTaskReport
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Report
+          content:
+            application/json:
+              schema:
+                type: object
+  /v1/reports/weekly-projects:
+    get:
+      tags:
+      - Reports
+      summary: Weekly project summary
+      operationId: getWeeklyProjectReport
+      parameters:
+      - name: week_start
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Report
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: opaque
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        $ref: ../schemas/common/common.schema.json#/$defs/idempotency_key
+    CorrelationId:
+      name: X-Correlation-Id
+      in: header
+      required: false
+      schema:
+        $ref: ../schemas/common/common.schema.json#/$defs/correlation_id
+    ActorId:
+      name: X-Actor-Id
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 3
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^TASK_[0-9A-HJKMNP-TV-Z]{26}$
+  responses:
+    Error:
+      description: Structured error
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/common/error_response.schema.json

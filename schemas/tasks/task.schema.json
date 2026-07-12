@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/task.schema.json",
+  "title": "Task",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "version",
+    "task_mode",
+    "status",
+    "title",
+    "created_by_employee_id",
+    "risk_level",
+    "approval_required",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/version"
+    },
+    "task_mode": {
+      "type": "string",
+      "enum": [
+        "SIMPLE",
+        "COMPLEX",
+        "CONTROLLED"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "PENDING_APPROVAL",
+        "READY",
+        "ASSIGNED",
+        "ACCEPTED",
+        "IN_PROGRESS",
+        "BLOCKED",
+        "SUBMITTED",
+        "NEEDS_REVIEW",
+        "COMPLETED",
+        "CANCELLED"
+      ]
+    },
+    "template_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^TMPL_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^PROJ_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 5000
+    },
+    "created_by_employee_id": {
+      "type": "string",
+      "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "owner_employee_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "location": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/location_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "workload": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/quantity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requested_worker_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "minimum_accept_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "due_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "required_evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/evidence_type"
+      },
+      "uniqueItems": true
+    },
+    "risk_level": {
+      "$ref": "common.schema.json#/$defs/risk_level"
+    },
+    "approval_required": {
+      "type": "boolean"
+    },
+    "approval_request_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^APRV_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "blocker_summary": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1000
+    },
+    "progress_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/source_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "completed_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cancelled_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "deleted_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "content_hash": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/content_hash"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "task_mode": {
+            "const": "CONTROLLED"
+          }
+        },
+        "required": [
+          "task_mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "approval_request_id"
+        ],
+        "properties": {
+          "approval_required": {
+            "const": true
+          },
+          "risk_level": {
+            "enum": [
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ]
+          },
+          "approval_request_id": {
+            "type": "string",
+            "pattern": "^APRV_[0-9A-HJKMNP-TV-Z]{26}$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "COMPLETED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "completed_at"
+        ],
+        "properties": {
+          "completed_at": {
+            "$ref": "common.schema.json#/$defs/timestamp"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "CANCELLED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "cancelled_at"
+        ],
+        "properties": {
+          "cancelled_at": {
+            "$ref": "common.schema.json#/$defs/timestamp"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "minimum_accept_count",
+          "requested_worker_count"
+        ]
+      },
+      "then": {
+        "properties": {
+          "minimum_accept_count": {
+            "minimum": 0
+          }
+        }
+      }
+    }
+  ]
+}

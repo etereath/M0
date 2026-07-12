@@ -1,0 +1,23 @@
+{
+  "project_update_id": "PUPD_01J2K9QX4R8S6B7C5D3E1F0GJ0",
+  "project_id": "PROJ_01J2K9QX4R8S6B7C5D3E1F0GHZ",
+  "update_type": "BLOCKER",
+  "actor": {
+    "actor_type": "HUMAN",
+    "actor_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "effective_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "agent_name": null,
+    "agent_model": null
+  },
+  "summary": "控制箱缺少浪涌保护器",
+  "suggested_progress_percent": 15,
+  "suggested_status": null,
+  "source": {
+    "source_type": "CHAT_MESSAGE",
+    "source_id": "msg-001",
+    "conversation_id": "conv-001",
+    "message_id": "msg-001",
+    "platform": "conversation_agent"
+  },
+  "created_at": "2026-07-12T11:00:00Z"
+}

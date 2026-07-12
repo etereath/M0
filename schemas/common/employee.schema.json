@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/employee.schema.json",
+  "title": "Employee",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "employee_id",
+    "version",
+    "name",
+    "role",
+    "active",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "employee_id": {
+      "type": "string",
+      "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/version"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "OWNER",
+        "MANAGER",
+        "TEAM_LEADER",
+        "WORKER",
+        "OBSERVER"
+      ]
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "managed_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "greenhouse_nos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "task_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "team_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 60
+      },
+      "uniqueItems": true
+    },
+    "daily_capacity_minutes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1440
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "deleted_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "content_hash": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/content_hash"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

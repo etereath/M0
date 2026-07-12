@@ -1,0 +1,17 @@
+{
+  "event_id": "SYNC_01J2K9QX4R8S6B7C5D3E1F0GJ8",
+  "direction": "CLOUD_TO_LOCAL",
+  "entity_type": "TASK",
+  "entity_id": "TASK_01J2K9QX4R8S6B7C5D3E1F0GHW",
+  "operation": "UPDATE",
+  "source_event_id": "external-event-001",
+  "payload_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "local_version": 1,
+  "cloud_version": 2,
+  "status": "PENDING",
+  "attempt_count": 0,
+  "error_code": null,
+  "error_message": null,
+  "created_at": "2026-07-12T08:00:00Z",
+  "processed_at": null
+}

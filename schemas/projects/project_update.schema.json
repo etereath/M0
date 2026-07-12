@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/project_update.schema.json",
+  "title": "Project Update",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_update_id",
+    "project_id",
+    "update_type",
+    "actor",
+    "summary",
+    "created_at"
+  ],
+  "properties": {
+    "project_update_id": {
+      "type": "string",
+      "pattern": "^PUPD_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^PROJ_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "update_type": {
+      "type": "string",
+      "enum": [
+        "PROGRESS",
+        "RISK",
+        "BLOCKER",
+        "NEXT_ACTION",
+        "STATUS_SUGGESTION",
+        "COMMENT",
+        "CORRECTION"
+      ]
+    },
+    "actor": {
+      "$ref": "common.schema.json#/$defs/actor"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 5000
+    },
+    "suggested_progress_percent": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "suggested_status": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "PROPOSED",
+        "PLANNING",
+        "ACTIVE",
+        "PAUSED",
+        "COMPLETED",
+        "CANCELLED",
+        null
+      ]
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/source_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    }
+  }
+}

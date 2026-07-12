@@ -1,0 +1,49 @@
+{
+  "_expected_schema": "task.schema.json",
+  "_payload": {
+    "task_id": "TASK_123",
+    "version": 1,
+    "task_mode": "SIMPLE",
+    "status": "READY",
+    "template_id": "TMPL_01J2K9QX4R8S6B7C5D3E1F0GJA",
+    "project_id": null,
+    "title": "27棚北侧四畦除草",
+    "description": "人工除草，不使用除草剂",
+    "created_by_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "owner_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "location": {
+      "location_id": null,
+      "greenhouse_no": "27",
+      "bed_no": null,
+      "area_description": "北侧四畦"
+    },
+    "workload": {
+      "value": 4,
+      "unit": "畦"
+    },
+    "requested_worker_count": 2,
+    "minimum_accept_count": 2,
+    "due_at": "2026-07-15T09:00:00Z",
+    "required_evidence": [
+      "PHOTO"
+    ],
+    "risk_level": "LOW",
+    "approval_required": false,
+    "approval_request_id": null,
+    "blocker_summary": null,
+    "progress_percent": 0,
+    "source": {
+      "source_type": "CHAT_MESSAGE",
+      "source_id": "msg-001",
+      "conversation_id": "conv-001",
+      "message_id": "msg-001",
+      "platform": "conversation_agent"
+    },
+    "created_at": "2026-07-12T08:00:00Z",
+    "updated_at": "2026-07-12T08:00:00Z",
+    "completed_at": null,
+    "cancelled_at": null,
+    "deleted_at": null,
+    "content_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+}

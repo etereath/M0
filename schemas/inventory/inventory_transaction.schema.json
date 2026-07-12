@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/inventory_transaction.schema.json",
+  "title": "Inventory Transaction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "transaction_id",
+    "version",
+    "item_id",
+    "transaction_type",
+    "quantity",
+    "occurred_at",
+    "actor",
+    "source"
+  ],
+  "properties": {
+    "transaction_id": {
+      "type": "string",
+      "pattern": "^ITXN_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/version"
+    },
+    "item_id": {
+      "type": "string",
+      "pattern": "^ITEM_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "lot_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^LOT_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "transaction_type": {
+      "type": "string",
+      "enum": [
+        "PURCHASE_IN",
+        "RETURN_IN",
+        "USE_OUT",
+        "ADJUST_IN",
+        "ADJUST_OUT",
+        "TRANSFER",
+        "DAMAGE_OUT",
+        "EXPIRED_OUT",
+        "RESERVE",
+        "RELEASE"
+      ]
+    },
+    "quantity": {
+      "$ref": "common.schema.json#/$defs/quantity"
+    },
+    "from_location_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^LOC_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "to_location_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^LOC_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "unit_cost": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/money"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 2000
+    },
+    "related_task_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "occurred_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "actor": {
+      "$ref": "common.schema.json#/$defs/actor"
+    },
+    "source": {
+      "$ref": "common.schema.json#/$defs/source_ref"
+    },
+    "created_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "content_hash": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/content_hash"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "transaction_type": {
+            "const": "TRANSFER"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "from_location_id",
+          "to_location_id"
+        ],
+        "properties": {
+          "from_location_id": {
+            "type": "string",
+            "pattern": "^LOC_[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "to_location_id": {
+            "type": "string",
+            "pattern": "^LOC_[0-9A-HJKMNP-TV-Z]{26}$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "transaction_type": {
+            "enum": [
+              "USE_OUT",
+              "ADJUST_OUT",
+              "DAMAGE_OUT",
+              "EXPIRED_OUT",
+              "RESERVE"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "from_location_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "transaction_type": {
+            "enum": [
+              "PURCHASE_IN",
+              "RETURN_IN",
+              "ADJUST_IN",
+              "RELEASE"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "to_location_id"
+        ]
+      }
+    }
+  ]
+}

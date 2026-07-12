@@ -1,0 +1,26 @@
+name: Contract change
+description: Propose a governed public-contract change.
+title: "contract: "
+labels: ["contract"]
+body:
+  - type: textarea
+    id: change
+    attributes:
+      label: 变更说明
+      description: 说明新增、修改或删除的契约内容。
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: 影响模块与兼容性
+      description: 列出受影响模块、兼容性及迁移方案。
+    validations:
+      required: true
+  - type: textarea
+    id: defaults
+    attributes:
+      label: 默认处理
+      description: 新枚举或字段需要说明旧客户端的默认处理。
+    validations:
+      required: true

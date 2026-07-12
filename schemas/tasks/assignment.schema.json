@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/assignment.schema.json",
+  "title": "Task Assignment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "assignment_id",
+    "task_id",
+    "employee_id",
+    "status",
+    "assignment_method",
+    "assigned_at"
+  ],
+  "properties": {
+    "assignment_id": {
+      "type": "string",
+      "pattern": "^ASGN_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "employee_id": {
+      "type": "string",
+      "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "assigned_by_employee_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "ACCEPTED",
+        "REJECTED",
+        "CANCELLED",
+        "COMPLETED"
+      ]
+    },
+    "assignment_method": {
+      "type": "string",
+      "enum": [
+        "MANUAL",
+        "AGENT_SUGGESTED",
+        "AGENT_AUTO",
+        "REASSIGNED"
+      ]
+    },
+    "assigned_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "responded_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "started_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "finished_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1000
+    }
+  }
+}

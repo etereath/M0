@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/common.schema.json",
+  "title": "M0 Common Definitions",
+  "type": "object",
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "timezone": {
+      "type": "string",
+      "default": "Asia/Shanghai"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:/-]+$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128
+    },
+    "actor_type": {
+      "type": "string",
+      "enum": [
+        "HUMAN",
+        "AGENT",
+        "SERVICE"
+      ]
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor_type",
+        "actor_id"
+      ],
+      "properties": {
+        "actor_type": {
+          "$ref": "#/$defs/actor_type"
+        },
+        "actor_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "effective_employee_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+        },
+        "agent_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 100
+        },
+        "agent_model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 100
+        }
+      }
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_type",
+        "source_id"
+      ],
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "CHAT_MESSAGE",
+            "EXTERNAL_PLATFORM",
+            "LOCAL_API",
+            "SCHEDULE",
+            "APPROVED_EXECUTOR",
+            "MANUAL",
+            "IMPORT"
+          ]
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "conversation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 200
+        },
+        "message_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 200
+        },
+        "platform": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 50
+        }
+      }
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "PHOTO",
+        "VIDEO",
+        "TEXT",
+        "FILE",
+        "MEASUREMENT",
+        "MANAGER_CONFIRMATION"
+      ]
+    },
+    "location_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "location_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^LOC_[0-9A-HJKMNP-TV-Z]{26}$"
+        },
+        "greenhouse_no": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 20
+        },
+        "bed_no": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 30
+        },
+        "area_description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 300
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "location_id"
+          ]
+        },
+        {
+          "required": [
+            "greenhouse_no"
+          ]
+        },
+        {
+          "required": [
+            "area_description"
+          ]
+        }
+      ]
+    },
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "value": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        }
+      }
+    },
+    "money": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "default": "CNY"
+        }
+      }
+    },
+    "attachment_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attachment_id",
+        "media_type"
+      ],
+      "properties": {
+        "attachment_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "media_type": {
+          "type": "string",
+          "enum": [
+            "PHOTO",
+            "VIDEO",
+            "FILE",
+            "AUDIO"
+          ]
+        },
+        "filename": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 255
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "storage_uri": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 500
+        }
+      }
+    },
+    "page_info": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "limit",
+        "has_more"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "has_more": {
+          "type": "boolean"
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

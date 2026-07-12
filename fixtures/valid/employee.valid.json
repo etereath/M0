@@ -1,0 +1,27 @@
+{
+  "employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+  "version": 1,
+  "name": "管理员",
+  "role": "OWNER",
+  "active": true,
+  "managed_scope": {
+    "greenhouse_nos": [
+      "27",
+      "28"
+    ],
+    "task_categories": [
+      "WEEDING"
+    ],
+    "team_ids": [
+      "farm"
+    ]
+  },
+  "skills": [
+    "MANAGEMENT"
+  ],
+  "daily_capacity_minutes": 480,
+  "created_at": "2026-07-12T08:00:00Z",
+  "updated_at": "2026-07-12T08:00:00Z",
+  "deleted_at": null,
+  "content_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

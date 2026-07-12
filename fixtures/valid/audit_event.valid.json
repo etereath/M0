@@ -1,0 +1,28 @@
+{
+  "audit_event_id": "AUDT_01J2K9QX4R8S6B7C5D3E1F0GJ9",
+  "correlation_id": "corr-0001",
+  "action": "task.create",
+  "result": "SUCCEEDED",
+  "actor": {
+    "actor_type": "HUMAN",
+    "actor_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "effective_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "agent_name": null,
+    "agent_model": null
+  },
+  "target_type": "TASK",
+  "target_id": "TASK_01J2K9QX4R8S6B7C5D3E1F0GHW",
+  "before_hash": null,
+  "after_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source": {
+    "source_type": "CHAT_MESSAGE",
+    "source_id": "msg-001",
+    "conversation_id": "conv-001",
+    "message_id": "msg-001",
+    "platform": "conversation_agent"
+  },
+  "metadata": {
+    "idempotency_key": "chatmsg:conversation_agent:msg-001"
+  },
+  "occurred_at": "2026-07-12T08:00:01Z"
+}

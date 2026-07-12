@@ -1,0 +1,13 @@
+{
+  "assignment_id": "ASGN_01J2K9QX4R8S6B7C5D3E1F0GHX",
+  "task_id": "TASK_01J2K9QX4R8S6B7C5D3E1F0GHW",
+  "employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHV",
+  "assigned_by_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+  "status": "PENDING",
+  "assignment_method": "MANUAL",
+  "assigned_at": "2026-07-12T08:05:00Z",
+  "responded_at": null,
+  "started_at": null,
+  "finished_at": null,
+  "reason": null
+}

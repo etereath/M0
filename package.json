@@ -1,0 +1,11 @@
+{
+  "name": "automation-platform-contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Automation platform public-contract authority",
+  "scripts": {
+    "validate": "python scripts/validate_contracts.py",
+    "test": "python -m unittest discover -s tests -v",
+    "package": "python scripts/package_release.py"
+  }
+}

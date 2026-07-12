@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/task_update.schema.json",
+  "title": "Task Update Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "update_id",
+    "task_id",
+    "update_type",
+    "actor",
+    "created_at"
+  ],
+  "properties": {
+    "update_id": {
+      "type": "string",
+      "pattern": "^TUPD_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "update_type": {
+      "type": "string",
+      "enum": [
+        "ACCEPTED",
+        "REJECTED",
+        "STARTED",
+        "PROGRESS",
+        "BLOCKED",
+        "UNBLOCKED",
+        "SUBMITTED",
+        "COMPLETED",
+        "COMMENT",
+        "CORRECTION",
+        "EVIDENCE_ADDED"
+      ]
+    },
+    "actor": {
+      "$ref": "common.schema.json#/$defs/actor"
+    },
+    "original_message": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 10000
+    },
+    "parsed_payload": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "progress_percent": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "completed_quantity": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "quantity_unit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 30
+    },
+    "blocker": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 2000
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/attachment_ref"
+      }
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/source_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "update_type": {
+            "const": "PROGRESS"
+          }
+        },
+        "required": [
+          "update_type"
+        ]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "required": [
+              "progress_percent"
+            ],
+            "properties": {
+              "progress_percent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            }
+          },
+          {
+            "required": [
+              "completed_quantity",
+              "quantity_unit"
+            ],
+            "properties": {
+              "completed_quantity": {
+                "type": "number",
+                "minimum": 0
+              },
+              "quantity_unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "update_type": {
+            "const": "BLOCKED"
+          }
+        },
+        "required": [
+          "update_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "blocker"
+        ],
+        "properties": {
+          "blocker": {
+            "type": "string",
+            "minLength": 2
+          }
+        }
+      }
+    }
+  ]
+}

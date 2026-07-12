@@ -1,0 +1,25 @@
+{
+  "project_id": "PROJ_01J2K9QX4R8S6B7C5D3E1F0GHZ",
+  "version": 1,
+  "title": "27棚灌溉自动控制",
+  "objective": "完成单畦试运行",
+  "scope": "5102R测试、控制箱、单畦试运行",
+  "owner_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+  "status": "PLANNING",
+  "priority": "HIGH",
+  "planned_start_date": "2026-07-15",
+  "target_date": "2026-08-15",
+  "progress_percent_confirmed": 10,
+  "progress_percent_suggested": 15,
+  "current_risks": [
+    "控制箱元件未齐"
+  ],
+  "next_actions": [
+    "完成5102R测试"
+  ],
+  "created_at": "2026-07-12T08:00:00Z",
+  "updated_at": "2026-07-12T08:00:00Z",
+  "completed_at": null,
+  "cancelled_at": null,
+  "content_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

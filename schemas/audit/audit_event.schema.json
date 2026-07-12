@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/audit_event.schema.json",
+  "title": "Audit Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "audit_event_id",
+    "action",
+    "result",
+    "actor",
+    "occurred_at"
+  ],
+  "properties": {
+    "audit_event_id": {
+      "type": "string",
+      "pattern": "^AUDT_[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "correlation_id": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/correlation_id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "action": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "SUCCEEDED",
+        "DENIED",
+        "FAILED",
+        "NO_OP"
+      ]
+    },
+    "actor": {
+      "$ref": "common.schema.json#/$defs/actor"
+    },
+    "target_type": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 50
+    },
+    "target_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 80
+    },
+    "before_hash": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/content_hash"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "after_hash": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/content_hash"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/source_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "occurred_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    }
+  }
+}

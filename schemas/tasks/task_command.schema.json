@@ -1,0 +1,456 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/task_command.schema.json",
+  "title": "Task Command",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "command_type",
+    "idempotency_key",
+    "actor",
+    "payload",
+    "requested_at"
+  ],
+  "properties": {
+    "command_type": {
+      "type": "string",
+      "enum": [
+        "CREATE_TASK",
+        "ASSIGN_TASK",
+        "ACCEPT_TASK",
+        "REJECT_TASK",
+        "START_TASK",
+        "REPORT_PROGRESS",
+        "REPORT_BLOCKER",
+        "UNBLOCK_TASK",
+        "SUBMIT_TASK",
+        "REVIEW_TASK",
+        "CHANGE_DUE_AT",
+        "CANCEL_TASK"
+      ]
+    },
+    "idempotency_key": {
+      "$ref": "common.schema.json#/$defs/idempotency_key"
+    },
+    "correlation_id": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/correlation_id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "actor": {
+      "$ref": "common.schema.json#/$defs/actor"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/source_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requested_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "command_type": {
+            "const": "CREATE_TASK"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "task_mode",
+              "title",
+              "created_by_employee_id"
+            ],
+            "properties": {
+              "task_mode": {
+                "type": "string",
+                "enum": [
+                  "SIMPLE",
+                  "COMPLEX",
+                  "CONTROLLED"
+                ]
+              },
+              "title": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 200
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 5000
+              },
+              "created_by_employee_id": {
+                "type": "string",
+                "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "template_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^TMPL_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^PROJ_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "location": {
+                "anyOf": [
+                  {
+                    "$ref": "common.schema.json#/$defs/location_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "workload": {
+                "anyOf": [
+                  {
+                    "$ref": "common.schema.json#/$defs/quantity"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "requested_worker_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "minimum_accept_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "due_at": {
+                "anyOf": [
+                  {
+                    "$ref": "common.schema.json#/$defs/timestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "required_evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "common.schema.json#/$defs/evidence_type"
+                },
+                "uniqueItems": true
+              },
+              "risk_level": {
+                "$ref": "common.schema.json#/$defs/risk_level"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command_type": {
+            "enum": [
+              "ASSIGN_TASK"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "task_id",
+              "employee_ids"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string",
+                "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "employee_ids": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
+                }
+              },
+              "assignment_method": {
+                "type": "string",
+                "enum": [
+                  "MANUAL",
+                  "AGENT_SUGGESTED",
+                  "AGENT_AUTO",
+                  "REASSIGNED"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command_type": {
+            "enum": [
+              "ACCEPT_TASK",
+              "REJECT_TASK",
+              "START_TASK",
+              "UNBLOCK_TASK",
+              "SUBMIT_TASK",
+              "CANCEL_TASK"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "task_id"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string",
+                "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "reason": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 1000
+              },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "$ref": "common.schema.json#/$defs/attachment_ref"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command_type": {
+            "const": "REPORT_PROGRESS"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "task_id"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string",
+                "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "progress_percent": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100
+              },
+              "completed_quantity": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "quantity_unit": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 30
+              },
+              "note": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 2000
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "progress_percent"
+                ]
+              },
+              {
+                "required": [
+                  "completed_quantity",
+                  "quantity_unit"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command_type": {
+            "const": "REPORT_BLOCKER"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "task_id",
+              "blocker"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string",
+                "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "blocker": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2000
+              },
+              "suggested_action": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 1000
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command_type": {
+            "const": "REVIEW_TASK"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "task_id",
+              "decision"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string",
+                "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "APPROVE_COMPLETION",
+                  "REQUEST_REWORK"
+                ]
+              },
+              "note": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 2000
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command_type": {
+            "const": "CHANGE_DUE_AT"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "task_id",
+              "due_at",
+              "reason"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string",
+                "pattern": "^TASK_[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "due_at": {
+                "$ref": "common.schema.json#/$defs/timestamp"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 1000
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

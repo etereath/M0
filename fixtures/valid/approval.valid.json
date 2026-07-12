@@ -1,0 +1,20 @@
+{
+  "approval_request_id": "APRV_01J2K9QX4R8S6B7C5D3E1F0GJ7",
+  "approval_type": "CONTROLLED_TASK",
+  "subject_type": "TASK",
+  "subject_id": "TASK_01J2K9QX4R8S6B7C5D3E1F0GHW",
+  "payload_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "PENDING",
+  "requested_by": {
+    "actor_type": "HUMAN",
+    "actor_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "effective_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "agent_name": null,
+    "agent_model": null
+  },
+  "requested_at": "2026-07-12T08:00:00Z",
+  "expires_at": "2026-07-13T08:00:00Z",
+  "resolved_by_employee_id": null,
+  "resolved_at": null,
+  "resolution_note": null
+}

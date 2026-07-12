@@ -1,0 +1,29 @@
+{
+  "update_id": "TUPD_01J2K9QX4R8S6B7C5D3E1F0GHY",
+  "task_id": "TASK_01J2K9QX4R8S6B7C5D3E1F0GHW",
+  "update_type": "PROGRESS",
+  "actor": {
+    "actor_type": "HUMAN",
+    "actor_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHV",
+    "effective_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHV",
+    "agent_name": null,
+    "agent_model": null
+  },
+  "original_message": "做完两畦了",
+  "parsed_payload": {
+    "completed_quantity": 2
+  },
+  "progress_percent": 50,
+  "completed_quantity": 2,
+  "quantity_unit": "畦",
+  "blocker": null,
+  "attachments": [],
+  "source": {
+    "source_type": "CHAT_MESSAGE",
+    "source_id": "msg-002",
+    "conversation_id": "conv-002",
+    "message_id": "msg-002",
+    "platform": "conversation_agent"
+  },
+  "created_at": "2026-07-12T10:00:00Z"
+}

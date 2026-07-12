@@ -1,0 +1,45 @@
+{
+  "command_type": "CREATE_TASK",
+  "idempotency_key": "chatmsg:conversation_agent:msg-001",
+  "correlation_id": "corr-0001",
+  "actor": {
+    "actor_type": "HUMAN",
+    "actor_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "effective_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "agent_name": null,
+    "agent_model": null
+  },
+  "payload": {
+    "task_mode": "SIMPLE",
+    "title": "27棚北侧四畦除草",
+    "description": "人工除草",
+    "created_by_employee_id": "EMP_01J2K9QX4R8S6B7C5D3E1F0GHT",
+    "template_id": "TMPL_01J2K9QX4R8S6B7C5D3E1F0GJA",
+    "project_id": null,
+    "location": {
+      "location_id": null,
+      "greenhouse_no": "27",
+      "bed_no": null,
+      "area_description": "北侧四畦"
+    },
+    "workload": {
+      "value": 4,
+      "unit": "畦"
+    },
+    "requested_worker_count": 2,
+    "minimum_accept_count": 2,
+    "due_at": "2026-07-15T09:00:00Z",
+    "required_evidence": [
+      "PHOTO"
+    ],
+    "risk_level": "LOW"
+  },
+  "source": {
+    "source_type": "CHAT_MESSAGE",
+    "source_id": "msg-001",
+    "conversation_id": "conv-001",
+    "message_id": "msg-001",
+    "platform": "conversation_agent"
+  },
+  "requested_at": "2026-07-12T08:00:00Z"
+}
