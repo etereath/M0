@@ -1,10 +1,10 @@
 # Automation Platform Contracts
 
-当前版本：`v0.1.0`（M0 公共契约基线）
+当前版本：`v0.1.0`（M0 公共契约基线，业务语义已冻结）
 
 本仓库是自动化平台公共契约的唯一权威来源。它维护领域对象、JSON Schema、OpenAPI、公共枚举、状态机、权限矩阵、ID/时间/版本规范、错误码、幂等与审计规则、fixtures，以及 Python 和 TypeScript 参考类型。
 
-M1–M7 等业务模块必须依赖已发布的正式版本、Tag 或固定 commit；不得复制后在本地修改契约。所有变更必须通过本仓库的 Issue 和 Pull Request。
+M0 的业务语义在 `v0.1.0` 冻结。M1–M5 等并行业务模块必须固定依赖 `v0.1.0` Release、Tag 或 commit，不得依赖 `main`，也不得复制后在本地修改契约。所有后续变更必须先通过 Issue，再通过 Pull Request。
 
 > 其他项目可以提出契约修改，但不能在本地私自改变公共枚举、状态机、字段含义或错误码。只有本仓库发布的正式版本才是有效契约。
 
@@ -13,7 +13,7 @@ M1–M7 等业务模块必须依赖已发布的正式版本、Tag 或固定 comm
 固定使用 Release 或 Tag，例如：
 
 ```text
-https://github.com/etereath/automation-platform-contracts/releases/tag/v0.1.0
+https://github.com/etereath/M0/releases/tag/v0.1.0
 ```
 
 不要让业务项目无条件追踪 `main`。需要新增字段、状态或枚举时，请先提交契约变更 Issue，说明使用场景、影响模块、默认处理方式与兼容性；获准后通过 Pull Request 修改此仓库。
