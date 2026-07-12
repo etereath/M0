@@ -30,6 +30,7 @@
       ]
     },
     "idempotency_key": {
+      "description": "Cross-channel authoritative idempotency key. HTTP Idempotency-Key is a transport copy and must match when present.",
       "$ref": "common.schema.json#/$defs/idempotency_key"
     },
     "correlation_id": {
@@ -43,6 +44,7 @@
       ]
     },
     "actor": {
+      "description": "Cross-channel authoritative actor envelope. HTTP X-Actor-Id is a transport copy of actor.actor_id and must match when present.",
       "$ref": "common.schema.json#/$defs/actor"
     },
     "payload": {

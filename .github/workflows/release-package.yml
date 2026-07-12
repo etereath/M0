@@ -3,7 +3,6 @@ name: Release package
 on:
   push:
     tags: ["v*"]
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,6 +23,11 @@ jobs:
         run: make test
       - name: Build release package
         run: make package
+      - name: Verify tag and release versions
+        shell: bash
+        run: |
+          python scripts/check_release_version.py "$GITHUB_REF_NAME"
+          python scripts/check_release_version.py "$GITHUB_REF_NAME" "dist/automation-platform-contracts-v${GITHUB_REF_NAME#v}.zip"
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}

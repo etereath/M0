@@ -1,8 +1,15 @@
 openapi: 3.1.0
 info:
   title: Farm Automation Data Gateway API
-  version: 0.1.0
-  description: M0 v0.1 public contract for interoperable automation-platform implementations.
+  version: 0.2.0
+  description: |
+    M0 v0.2 public contract for interoperable automation-platform implementations.
+    Task command endpoints use a complete body envelope for every transport. The
+    body idempotency_key and actor are authoritative across channels. HTTP
+    Idempotency-Key and X-Actor-Id are gateway transport fields and, when both
+    are present, must exactly match body.idempotency_key and body.actor.actor_id.
+    A mismatch returns
+    CONTRACT_HEADER_BODY_MISMATCH.
 security:
 - BearerAuth: []
 tags:
@@ -109,6 +116,8 @@ paths:
           $ref: '#/components/responses/Error'
         '409':
           $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/HeaderBodyMismatch'
     get:
       tags:
       - Tasks
@@ -198,6 +207,8 @@ paths:
           $ref: '#/components/responses/Error'
         '409':
           $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/HeaderBodyMismatch'
   /v1/tasks/{task_id}/updates:
     post:
       tags:
@@ -237,7 +248,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../schemas/projects/project.schema.json
+              $ref: ../schemas/projects/project_create.schema.json
       responses:
         '201':
           description: Created
@@ -460,6 +471,7 @@ components:
       name: Idempotency-Key
       in: header
       required: true
+      description: HTTP transport copy of body.idempotency_key for task commands; when both are present, values must match exactly.
       schema:
         $ref: ../schemas/common/common.schema.json#/$defs/idempotency_key
     CorrelationId:
@@ -472,6 +484,7 @@ components:
       name: X-Actor-Id
       in: header
       required: true
+      description: HTTP transport copy of body.actor.actor_id for task commands; when both are present, values must match exactly.
       schema:
         type: string
         minLength: 3
@@ -489,3 +502,9 @@ components:
         application/json:
           schema:
             $ref: ../schemas/common/error_response.schema.json
+    HeaderBodyMismatch:
+      description: HTTP header and command body envelope disagree
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/common/contract_header_body_mismatch.schema.json

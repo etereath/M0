@@ -1,0 +1,12 @@
+{
+  "_expected_schema": "project_create.schema.json",
+  "_payload": {
+    "project_id": "PROJ_01J2ABCD3EFGH5JKM6NPQ7RST8",
+    "version": 1,
+    "title": "Client supplied identity",
+    "owner_employee_id": "EMP_01J2ABCD3EFGH5JKM6NPQ7RST8",
+    "status": "PROPOSED",
+    "created_at": "2026-07-12T00:00:00Z",
+    "updated_at": "2026-07-12T00:00:00Z"
+  }
+}

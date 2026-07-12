@@ -20,6 +20,21 @@
       "type": "integer",
       "minimum": 1
     },
+    "project_status": {
+      "type": "string",
+      "enum": [
+        "PROPOSED",
+        "PLANNING",
+        "ACTIVE",
+        "PAUSED",
+        "COMPLETED",
+        "CANCELLED"
+      ]
+    },
+    "project_priority": {
+      "type": "string",
+      "enum": ["LOW", "NORMAL", "HIGH", "URGENT"]
+    },
     "content_hash": {
       "type": "string",
       "pattern": "^sha256:[0-9a-f]{64}$"
