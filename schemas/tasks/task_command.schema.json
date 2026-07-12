@@ -44,7 +44,7 @@
       ]
     },
     "actor": {
-      "description": "Cross-channel authoritative actor envelope. HTTP X-Actor-Id is a transport copy of actor.effective_employee_id and must match when present.",
+      "description": "Cross-channel authoritative actor envelope. HTTP X-Actor-Id is a transport copy of actor.actor_id and must match when present.",
       "$ref": "common.schema.json#/$defs/actor"
     },
     "payload": {

@@ -24,6 +24,8 @@ NAME_OVERRIDES = {
         "evidence_type": "EvidenceType",
         "risk_level": "RiskLevel",
         "source_type": "SourceType",
+        "project_status": "ProjectStatus",
+        "project_priority": "ProjectPriority",
     },
     "employee": {"role": "EmployeeRole"},
     "task": {"task_mode": "TaskMode", "status": "TaskStatus"},

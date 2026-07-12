@@ -38,6 +38,24 @@ export const AuditResult = [
 ] as const;
 export type AuditResult = typeof AuditResult[number];
 
+export const ProjectStatus = [
+  "PROPOSED",
+  "PLANNING",
+  "ACTIVE",
+  "PAUSED",
+  "COMPLETED",
+  "CANCELLED",
+] as const;
+export type ProjectStatus = typeof ProjectStatus[number];
+
+export const ProjectPriority = [
+  "LOW",
+  "NORMAL",
+  "HIGH",
+  "URGENT",
+] as const;
+export type ProjectPriority = typeof ProjectPriority[number];
+
 export const ActorType = [
   "HUMAN",
   "AGENT",
@@ -105,32 +123,6 @@ export const InventoryTransactionType = [
 ] as const;
 export type InventoryTransactionType = typeof InventoryTransactionType[number];
 
-export const ProjectStatus = [
-  "PROPOSED",
-  "PLANNING",
-  "ACTIVE",
-  "PAUSED",
-  "COMPLETED",
-  "CANCELLED",
-] as const;
-export type ProjectStatus = typeof ProjectStatus[number];
-
-export const ProjectPriority = [
-  "LOW",
-  "NORMAL",
-  "HIGH",
-  "URGENT",
-] as const;
-export type ProjectPriority = typeof ProjectPriority[number];
-
-export const ProjectCreatePriority = [
-  "LOW",
-  "NORMAL",
-  "HIGH",
-  "URGENT",
-] as const;
-export type ProjectCreatePriority = typeof ProjectCreatePriority[number];
-
 export const ProjectUpdateType = [
   "PROGRESS",
   "RISK",
@@ -141,16 +133,6 @@ export const ProjectUpdateType = [
   "CORRECTION",
 ] as const;
 export type ProjectUpdateType = typeof ProjectUpdateType[number];
-
-export const ProjectUpdateSuggestedStatus = [
-  "PROPOSED",
-  "PLANNING",
-  "ACTIVE",
-  "PAUSED",
-  "COMPLETED",
-  "CANCELLED",
-] as const;
-export type ProjectUpdateSuggestedStatus = typeof ProjectUpdateSuggestedStatus[number];
 
 export const SyncDirection = [
   "CLOUD_TO_LOCAL",

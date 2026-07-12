@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://farm-automation.local/schemas/contract_header_body_mismatch.schema.json",
+  "title": "Contract Header Body Mismatch Error",
+  "description": "Structured error returned when HTTP transport fields disagree with the command body envelope.",
+  "allOf": [
+    {"$ref": "error_response.schema.json"},
+    {
+      "properties": {
+        "error": {
+          "properties": {
+            "code": {"const": "CONTRACT_HEADER_BODY_MISMATCH"}
+          }
+        }
+      }
+    }
+  ]
+}

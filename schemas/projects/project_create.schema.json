@@ -25,8 +25,7 @@
       "pattern": "^EMP_[0-9A-HJKMNP-TV-Z]{26}$"
     },
     "priority": {
-      "type": "string",
-      "enum": ["LOW", "NORMAL", "HIGH", "URGENT"],
+      "$ref": "common.schema.json#/$defs/project_priority",
       "default": "NORMAL"
     },
     "planned_start_date": {

@@ -32,6 +32,20 @@ class AuditResult(StrEnum):
     FAILED = "FAILED"
     NO_OP = "NO_OP"
 
+class ProjectStatus(StrEnum):
+    PROPOSED = "PROPOSED"
+    PLANNING = "PLANNING"
+    ACTIVE = "ACTIVE"
+    PAUSED = "PAUSED"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+
+class ProjectPriority(StrEnum):
+    LOW = "LOW"
+    NORMAL = "NORMAL"
+    HIGH = "HIGH"
+    URGENT = "URGENT"
+
 class ActorType(StrEnum):
     HUMAN = "HUMAN"
     AGENT = "AGENT"
@@ -85,26 +99,6 @@ class InventoryTransactionType(StrEnum):
     RESERVE = "RESERVE"
     RELEASE = "RELEASE"
 
-class ProjectStatus(StrEnum):
-    PROPOSED = "PROPOSED"
-    PLANNING = "PLANNING"
-    ACTIVE = "ACTIVE"
-    PAUSED = "PAUSED"
-    COMPLETED = "COMPLETED"
-    CANCELLED = "CANCELLED"
-
-class ProjectPriority(StrEnum):
-    LOW = "LOW"
-    NORMAL = "NORMAL"
-    HIGH = "HIGH"
-    URGENT = "URGENT"
-
-class ProjectCreatePriority(StrEnum):
-    LOW = "LOW"
-    NORMAL = "NORMAL"
-    HIGH = "HIGH"
-    URGENT = "URGENT"
-
 class ProjectUpdateType(StrEnum):
     PROGRESS = "PROGRESS"
     RISK = "RISK"
@@ -113,14 +107,6 @@ class ProjectUpdateType(StrEnum):
     STATUS_SUGGESTION = "STATUS_SUGGESTION"
     COMMENT = "COMMENT"
     CORRECTION = "CORRECTION"
-
-class ProjectUpdateSuggestedStatus(StrEnum):
-    PROPOSED = "PROPOSED"
-    PLANNING = "PLANNING"
-    ACTIVE = "ACTIVE"
-    PAUSED = "PAUSED"
-    COMPLETED = "COMPLETED"
-    CANCELLED = "CANCELLED"
 
 class SyncDirection(StrEnum):
     CLOUD_TO_LOCAL = "CLOUD_TO_LOCAL"

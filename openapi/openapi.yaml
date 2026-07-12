@@ -3,11 +3,12 @@ info:
   title: Farm Automation Data Gateway API
   version: 0.2.0
   description: |
-    M0 v0.1 public contract for interoperable automation-platform implementations.
+    M0 v0.2 public contract for interoperable automation-platform implementations.
     Task command endpoints use a complete body envelope for every transport. The
     body idempotency_key and actor are authoritative across channels. HTTP
     Idempotency-Key and X-Actor-Id are gateway transport fields and, when both
-    are present, must exactly match the body fields. A mismatch returns
+    are present, must exactly match body.idempotency_key and body.actor.actor_id.
+    A mismatch returns
     CONTRACT_HEADER_BODY_MISMATCH.
 security:
 - BearerAuth: []
@@ -483,7 +484,7 @@ components:
       name: X-Actor-Id
       in: header
       required: true
-      description: HTTP transport copy of body.actor.effective_employee_id for task commands; when both are present, values must match exactly.
+      description: HTTP transport copy of body.actor.actor_id for task commands; when both are present, values must match exactly.
       schema:
         type: string
         minLength: 3
@@ -506,4 +507,4 @@ components:
       content:
         application/json:
           schema:
-            $ref: ../schemas/common/error_response.schema.json
+            $ref: ../schemas/common/contract_header_body_mismatch.schema.json

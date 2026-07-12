@@ -51,6 +51,30 @@
     ]
   },
   {
+    "name": "ProjectStatus",
+    "source": "schemas/common/common.schema.json",
+    "pointer": "/$defs/project_status",
+    "values": [
+      "PROPOSED",
+      "PLANNING",
+      "ACTIVE",
+      "PAUSED",
+      "COMPLETED",
+      "CANCELLED"
+    ]
+  },
+  {
+    "name": "ProjectPriority",
+    "source": "schemas/common/common.schema.json",
+    "pointer": "/$defs/project_priority",
+    "values": [
+      "LOW",
+      "NORMAL",
+      "HIGH",
+      "URGENT"
+    ]
+  },
+  {
     "name": "ActorType",
     "source": "schemas/common/common.schema.json",
     "pointer": "/$defs/actor_type",
@@ -139,41 +163,6 @@
     ]
   },
   {
-    "name": "ProjectStatus",
-    "source": "schemas/projects/project.schema.json",
-    "pointer": "/properties/status",
-    "values": [
-      "PROPOSED",
-      "PLANNING",
-      "ACTIVE",
-      "PAUSED",
-      "COMPLETED",
-      "CANCELLED"
-    ]
-  },
-  {
-    "name": "ProjectPriority",
-    "source": "schemas/projects/project.schema.json",
-    "pointer": "/properties/priority",
-    "values": [
-      "LOW",
-      "NORMAL",
-      "HIGH",
-      "URGENT"
-    ]
-  },
-  {
-    "name": "ProjectCreatePriority",
-    "source": "schemas/projects/project_create.schema.json",
-    "pointer": "/properties/priority",
-    "values": [
-      "LOW",
-      "NORMAL",
-      "HIGH",
-      "URGENT"
-    ]
-  },
-  {
     "name": "ProjectUpdateType",
     "source": "schemas/projects/project_update.schema.json",
     "pointer": "/properties/update_type",
@@ -185,19 +174,6 @@
       "STATUS_SUGGESTION",
       "COMMENT",
       "CORRECTION"
-    ]
-  },
-  {
-    "name": "ProjectUpdateSuggestedStatus",
-    "source": "schemas/projects/project_update.schema.json",
-    "pointer": "/properties/suggested_status",
-    "values": [
-      "PROPOSED",
-      "PLANNING",
-      "ACTIVE",
-      "PAUSED",
-      "COMPLETED",
-      "CANCELLED"
     ]
   },
   {
