@@ -16,3 +16,4 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 ### Changed
 
 - Moved implementation-specific platform, deployment, and business-module mappings to the private `automation-platform-internal-mappings` repository.
+- Declared the M0 `v0.1.0` business semantics frozen and documented the fixed-version dependency policy for M1–M5.
