@@ -211,4 +211,3 @@ class TaskUpdateType(StrEnum):
     COMMENT = "COMMENT"
     CORRECTION = "CORRECTION"
     EVIDENCE_ADDED = "EVIDENCE_ADDED"
-

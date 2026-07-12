@@ -93,7 +93,7 @@ def render_python(specs: list[EnumSpec]) -> str:
         for value in spec.values:
             lines.append(f"    {value} = \"{value}\"\n")
         lines.append("\n")
-    return "".join(lines)
+    return "".join(lines).rstrip() + "\n"
 
 
 def render_typescript(specs: list[EnumSpec]) -> str:
@@ -104,7 +104,7 @@ def render_typescript(specs: list[EnumSpec]) -> str:
             lines.append(f'  "{value}",\n')
         lines.append("] as const;\n")
         lines.append(f"export type {spec.name} = typeof {spec.name}[number];\n\n")
-    return "".join(lines)
+    return "".join(lines).rstrip() + "\n"
 
 
 def render_manifest(specs: list[EnumSpec]) -> str:

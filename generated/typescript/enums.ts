@@ -261,4 +261,3 @@ export const TaskUpdateType = [
   "EVIDENCE_ADDED",
 ] as const;
 export type TaskUpdateType = typeof TaskUpdateType[number];
-
