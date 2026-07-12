@@ -1,6 +1,6 @@
 # Automation Platform Contracts
 
-当前版本：`v0.1.0`（M0 公共契约基线，业务语义已冻结）
+冻结基线：`v0.1.0`；本分支准备下一兼容版本 `v0.2.0`。
 
 本仓库是自动化平台公共契约的唯一权威来源。它维护领域对象、JSON Schema、OpenAPI、公共枚举、状态机、权限矩阵、ID/时间/版本规范、错误码、幂等与审计规则、fixtures，以及 Python 和 TypeScript 参考类型。
 

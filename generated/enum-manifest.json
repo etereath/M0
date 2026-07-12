@@ -1,0 +1,343 @@
+[
+  {
+    "name": "AgentProposalType",
+    "source": "schemas/approvals/agent_proposal.schema.json",
+    "pointer": "/properties/proposal_type",
+    "values": [
+      "TASK_CLASSIFICATION",
+      "TASK_ASSIGNMENT",
+      "PROJECT_STATUS",
+      "RESTOCK",
+      "EXECUTION_ACTION",
+      "RISK_ASSESSMENT",
+      "OTHER"
+    ]
+  },
+  {
+    "name": "ApprovalType",
+    "source": "schemas/approvals/approval.schema.json",
+    "pointer": "/properties/approval_type",
+    "values": [
+      "CONTROLLED_TASK",
+      "CHANGE_DUE_AT",
+      "PROJECT_COMPLETE",
+      "PROJECT_CANCEL",
+      "INVENTORY_ADJUSTMENT",
+      "EXECUTION_SIDE_EFFECT",
+      "OTHER"
+    ]
+  },
+  {
+    "name": "ApprovalStatus",
+    "source": "schemas/approvals/approval.schema.json",
+    "pointer": "/properties/status",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "CANCELLED",
+      "EXPIRED"
+    ]
+  },
+  {
+    "name": "AuditResult",
+    "source": "schemas/audit/audit_event.schema.json",
+    "pointer": "/properties/result",
+    "values": [
+      "SUCCEEDED",
+      "DENIED",
+      "FAILED",
+      "NO_OP"
+    ]
+  },
+  {
+    "name": "ActorType",
+    "source": "schemas/common/common.schema.json",
+    "pointer": "/$defs/actor_type",
+    "values": [
+      "HUMAN",
+      "AGENT",
+      "SERVICE"
+    ]
+  },
+  {
+    "name": "SourceType",
+    "source": "schemas/common/common.schema.json",
+    "pointer": "/$defs/source_ref/properties/source_type",
+    "values": [
+      "CHAT_MESSAGE",
+      "EXTERNAL_PLATFORM",
+      "LOCAL_API",
+      "SCHEDULE",
+      "APPROVED_EXECUTOR",
+      "MANUAL",
+      "IMPORT"
+    ]
+  },
+  {
+    "name": "RiskLevel",
+    "source": "schemas/common/common.schema.json",
+    "pointer": "/$defs/risk_level",
+    "values": [
+      "LOW",
+      "MEDIUM",
+      "HIGH",
+      "CRITICAL"
+    ]
+  },
+  {
+    "name": "EvidenceType",
+    "source": "schemas/common/common.schema.json",
+    "pointer": "/$defs/evidence_type",
+    "values": [
+      "PHOTO",
+      "VIDEO",
+      "TEXT",
+      "FILE",
+      "MEASUREMENT",
+      "MANAGER_CONFIRMATION"
+    ]
+  },
+  {
+    "name": "CommonMediaType",
+    "source": "schemas/common/common.schema.json",
+    "pointer": "/$defs/attachment_ref/properties/media_type",
+    "values": [
+      "PHOTO",
+      "VIDEO",
+      "FILE",
+      "AUDIO"
+    ]
+  },
+  {
+    "name": "EmployeeRole",
+    "source": "schemas/common/employee.schema.json",
+    "pointer": "/properties/role",
+    "values": [
+      "OWNER",
+      "MANAGER",
+      "TEAM_LEADER",
+      "WORKER",
+      "OBSERVER"
+    ]
+  },
+  {
+    "name": "InventoryTransactionType",
+    "source": "schemas/inventory/inventory_transaction.schema.json",
+    "pointer": "/properties/transaction_type",
+    "values": [
+      "PURCHASE_IN",
+      "RETURN_IN",
+      "USE_OUT",
+      "ADJUST_IN",
+      "ADJUST_OUT",
+      "TRANSFER",
+      "DAMAGE_OUT",
+      "EXPIRED_OUT",
+      "RESERVE",
+      "RELEASE"
+    ]
+  },
+  {
+    "name": "ProjectStatus",
+    "source": "schemas/projects/project.schema.json",
+    "pointer": "/properties/status",
+    "values": [
+      "PROPOSED",
+      "PLANNING",
+      "ACTIVE",
+      "PAUSED",
+      "COMPLETED",
+      "CANCELLED"
+    ]
+  },
+  {
+    "name": "ProjectPriority",
+    "source": "schemas/projects/project.schema.json",
+    "pointer": "/properties/priority",
+    "values": [
+      "LOW",
+      "NORMAL",
+      "HIGH",
+      "URGENT"
+    ]
+  },
+  {
+    "name": "ProjectCreatePriority",
+    "source": "schemas/projects/project_create.schema.json",
+    "pointer": "/properties/priority",
+    "values": [
+      "LOW",
+      "NORMAL",
+      "HIGH",
+      "URGENT"
+    ]
+  },
+  {
+    "name": "ProjectUpdateType",
+    "source": "schemas/projects/project_update.schema.json",
+    "pointer": "/properties/update_type",
+    "values": [
+      "PROGRESS",
+      "RISK",
+      "BLOCKER",
+      "NEXT_ACTION",
+      "STATUS_SUGGESTION",
+      "COMMENT",
+      "CORRECTION"
+    ]
+  },
+  {
+    "name": "ProjectUpdateSuggestedStatus",
+    "source": "schemas/projects/project_update.schema.json",
+    "pointer": "/properties/suggested_status",
+    "values": [
+      "PROPOSED",
+      "PLANNING",
+      "ACTIVE",
+      "PAUSED",
+      "COMPLETED",
+      "CANCELLED"
+    ]
+  },
+  {
+    "name": "SyncDirection",
+    "source": "schemas/sync/sync_event.schema.json",
+    "pointer": "/properties/direction",
+    "values": [
+      "CLOUD_TO_LOCAL",
+      "LOCAL_TO_CLOUD"
+    ]
+  },
+  {
+    "name": "SyncEntityType",
+    "source": "schemas/sync/sync_event.schema.json",
+    "pointer": "/properties/entity_type",
+    "values": [
+      "EMPLOYEE",
+      "TASK",
+      "ASSIGNMENT",
+      "TASK_UPDATE",
+      "PROJECT",
+      "PROJECT_UPDATE",
+      "ITEM",
+      "LOT",
+      "INVENTORY_TRANSACTION",
+      "AGENT_PROPOSAL",
+      "APPROVAL"
+    ]
+  },
+  {
+    "name": "SyncOperation",
+    "source": "schemas/sync/sync_event.schema.json",
+    "pointer": "/properties/operation",
+    "values": [
+      "CREATE",
+      "UPDATE",
+      "APPEND",
+      "SOFT_DELETE",
+      "RECONCILE"
+    ]
+  },
+  {
+    "name": "SyncStatus",
+    "source": "schemas/sync/sync_event.schema.json",
+    "pointer": "/properties/status",
+    "values": [
+      "PENDING",
+      "PROCESSING",
+      "SUCCEEDED",
+      "FAILED_RETRYABLE",
+      "FAILED_PERMANENT",
+      "CONFLICT"
+    ]
+  },
+  {
+    "name": "AssignmentStatus",
+    "source": "schemas/tasks/assignment.schema.json",
+    "pointer": "/properties/status",
+    "values": [
+      "PENDING",
+      "ACCEPTED",
+      "REJECTED",
+      "CANCELLED",
+      "COMPLETED"
+    ]
+  },
+  {
+    "name": "AssignmentMethod",
+    "source": "schemas/tasks/assignment.schema.json",
+    "pointer": "/properties/assignment_method",
+    "values": [
+      "MANUAL",
+      "AGENT_SUGGESTED",
+      "AGENT_AUTO",
+      "REASSIGNED"
+    ]
+  },
+  {
+    "name": "TaskMode",
+    "source": "schemas/tasks/task.schema.json",
+    "pointer": "/properties/task_mode",
+    "values": [
+      "SIMPLE",
+      "COMPLEX",
+      "CONTROLLED"
+    ]
+  },
+  {
+    "name": "TaskStatus",
+    "source": "schemas/tasks/task.schema.json",
+    "pointer": "/properties/status",
+    "values": [
+      "DRAFT",
+      "PENDING_APPROVAL",
+      "READY",
+      "ASSIGNED",
+      "ACCEPTED",
+      "IN_PROGRESS",
+      "BLOCKED",
+      "SUBMITTED",
+      "NEEDS_REVIEW",
+      "COMPLETED",
+      "CANCELLED"
+    ]
+  },
+  {
+    "name": "TaskCommandType",
+    "source": "schemas/tasks/task_command.schema.json",
+    "pointer": "/properties/command_type",
+    "values": [
+      "CREATE_TASK",
+      "ASSIGN_TASK",
+      "ACCEPT_TASK",
+      "REJECT_TASK",
+      "START_TASK",
+      "REPORT_PROGRESS",
+      "REPORT_BLOCKER",
+      "UNBLOCK_TASK",
+      "SUBMIT_TASK",
+      "REVIEW_TASK",
+      "CHANGE_DUE_AT",
+      "CANCEL_TASK"
+    ]
+  },
+  {
+    "name": "TaskUpdateType",
+    "source": "schemas/tasks/task_update.schema.json",
+    "pointer": "/properties/update_type",
+    "values": [
+      "ACCEPTED",
+      "REJECTED",
+      "STARTED",
+      "PROGRESS",
+      "BLOCKED",
+      "UNBLOCKED",
+      "SUBMITTED",
+      "COMPLETED",
+      "COMMENT",
+      "CORRECTION",
+      "EVIDENCE_ADDED"
+    ]
+  }
+]

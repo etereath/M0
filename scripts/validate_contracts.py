@@ -10,6 +10,7 @@ from urllib.parse import unquote, urlparse
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
+from generate_reference_types import collect_enum_specs, render_manifest, render_python, render_typescript
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -153,54 +154,23 @@ def validate_text_files() -> None:
             raise AssertionError(f"Absolute local path found: {path.relative_to(ROOT)}")
 
 
-def enum_values(document: object) -> set[tuple[str, ...]]:
-    values: set[tuple[str, ...]] = set()
-    for node in walk(document):
-        enum = node.get("enum") if isinstance(node, dict) else None
-        if isinstance(enum, list):
-            frozen = tuple(json.dumps(item, sort_keys=True, ensure_ascii=False) for item in enum)
-            if len(frozen) != len(set(frozen)):
-                raise AssertionError(f"Duplicate enum value: {enum}")
-            if all(isinstance(item, str) for item in enum):
-                values.add(tuple(enum))
-    return values
-
-
-def generated_enum_values() -> set[tuple[str, ...]]:
-    values: set[tuple[str, ...]] = set()
-    python_path = ROOT / "generated" / "python" / "enums.py"
-    tree = ast.parse(python_path.read_text(encoding="utf-8"), filename=str(python_path))
-    for node in tree.body:
-        if isinstance(node, ast.ClassDef):
-            members = [
-                statement.value.value
-                for statement in node.body
-                if isinstance(statement, ast.Assign)
-                and len(statement.targets) == 1
-                and isinstance(statement.targets[0], ast.Name)
-                and isinstance(statement.value, ast.Constant)
-                and isinstance(statement.value.value, str)
-            ]
-            if members:
-                values.add(tuple(members))
-    typescript = (ROOT / "generated" / "typescript" / "enums.ts").read_text(encoding="utf-8")
-    for match in re.finditer(r"export const \w+\s*=\s*\[(.*?)\]\s+as const;", typescript, flags=re.DOTALL):
-        members = tuple(re.findall(r'"([^"\\]+)"', match.group(1)))
-        if members:
-            values.add(members)
-    return values
-
-
 def validate_generated_references(schemas: dict[str, dict]) -> None:
-    source_enums: set[tuple[str, ...]] = set()
     for schema in schemas.values():
-        source_enums.update(enum_values(schema))
-    references = generated_enum_values()
-    if not references:
-        raise AssertionError("No generated or reference enums found")
-    for enum in references:
-        if enum not in source_enums:
-            raise AssertionError(f"Generated enum is not synchronized with a schema enum: {enum}")
+        for node in walk(schema):
+            enum = node.get("enum") if isinstance(node, dict) else None
+            if isinstance(enum, list):
+                frozen = tuple(json.dumps(item, sort_keys=True, ensure_ascii=False) for item in enum)
+                if len(frozen) != len(set(frozen)):
+                    raise AssertionError(f"Duplicate enum value: {enum}")
+    specs = collect_enum_specs(SCHEMA_DIR)
+    expected = {
+        ROOT / "generated" / "python" / "enums.py": render_python(specs),
+        ROOT / "generated" / "typescript" / "enums.ts": render_typescript(specs),
+        ROOT / "generated" / "enum-manifest.json": render_manifest(specs),
+    }
+    for path, content in expected.items():
+        if not path.is_file() or path.read_text(encoding="utf-8") != content:
+            raise AssertionError(f"Generated reference is out of sync with schemas: {path.relative_to(ROOT)}")
 
 
 def validate_python_syntax() -> None:

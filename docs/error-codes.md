@@ -18,6 +18,7 @@
 | `EXTERNAL_PLATFORM_UNAVAILABLE` | 503 | 是 | 外部平台暂不可用 |
 | `STORAGE_TEMPORARILY_UNAVAILABLE` | 503 | 是 | 本地存储暂不可用 |
 | `APPROVED_EXECUTION_REJECTED` | 409 | 否 | 已批准执行申请被拒绝 |
+| `CONTRACT_HEADER_BODY_MISMATCH` | 422 | 否 | HTTP Header 与命令 body envelope 不一致 |
 | `INTERNAL_ERROR` | 500 | 视情况 | 未分类内部错误 |
 
 错误响应必须符合 `schemas/error_response.schema.json`，不得把密钥、密码、Token 或完整堆栈返回给普通调用方。
