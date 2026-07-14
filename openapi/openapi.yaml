@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Farm Automation Data Gateway API
-  version: 0.2.0
+  version: 0.2.1
   description: |
     M0 v0.2 public contract for interoperable automation-platform implementations.
     Task command endpoints use a complete body envelope for every transport. The
