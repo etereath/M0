@@ -8,8 +8,9 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ### Documentation
 
-- Marked `v0.2.0` as the current formal release and `v0.1.0` as the historical frozen baseline.
-- Clarified that new M1–M5 projects should use `v0.2.0`, while existing `v0.1.0` modules do not need an immediate upgrade.
+- Marked `v0.2.1` as the current formal contract release and `v0.1.0` as the historical frozen baseline.
+- Declared that all M1–M7 projects must uniformly use the fixed `v0.2.1` Release, Tag, or commit.
+- Recorded that the `v0.2.1` Release ZIP preserves the `v0.2.0` contract semantics.
 - Added an upgrade checklist for the project-create request and task-command Header/body consistency rules.
 
 ## [0.2.0] - 2026-07-14
@@ -36,4 +37,4 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 ### Changed
 
 - Moved implementation-specific platform, deployment, and business-module mappings to the private `automation-platform-internal-mappings` repository.
-- Declared the M0 `v0.1.0` business semantics frozen and documented the fixed-version dependency policy for M1–M5.
+- Declared the M0 `v0.1.0` business semantics frozen and documented the fixed-version dependency policy for downstream modules.

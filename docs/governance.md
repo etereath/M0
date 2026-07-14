@@ -8,5 +8,5 @@
 6. 不允许借由 fixtures 暗中改变正式契约；fixtures 只能证明已定义的契约行为。
 7. 生成代码不能反向成为契约来源。JSON Schema、OpenAPI 和正式文档才是权威输入。
 8. OpenAPI 与 JSON Schema 出现冲突时必须阻止合并，先修复冲突并补充对应 fixtures。
-9. M1–M5 只能依赖 `v0.1.0` Release、Tag 或固定 commit，不能无条件追踪 `main`。
+9. M1–M7 必须统一依赖 `v0.2.1` Release、Tag 或固定 commit，不能无条件追踪 `main`；`v0.2.1` ZIP 与 `v0.2.0` 契约语义一致。
 10. 所有变更必须更新 `CHANGELOG.md`，并在需要时提升 `VERSION` 和创建 Release。
